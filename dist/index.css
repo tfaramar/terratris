@@ -1,5 +1,5 @@
 body {
-    background-image: url("../background_img.jpg");
+    background-image: url("../assets/background_img.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     min-height: 94vh;
@@ -7,7 +7,6 @@ body {
     font-family: 'Volkhov', serif;
     font-weight: bold;
     color: goldenrod;
-
 }
 
 h1 {

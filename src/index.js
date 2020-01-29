@@ -13,7 +13,7 @@ const drawPiece = (type, offset) => {
     type.forEach((row, y) => {
         row.forEach((val, x) => {
             if (val !== 0) {
-                context.fillStyle = "palevioletred";
+                context.fillStyle = colors[val];
                 context.fillRect(x + offset.x, y + offset.y, 1, 1);
             }
         });
@@ -43,10 +43,76 @@ const update = (time = 0) => {
     requestAnimationFrame(update);
 }
 
+const resetPiece = () => {
+    let pieces = ["T", "Z", "S", "O", "L", "J", "I"];
+    let rand = Math.floor(pieces.length * Math.random())
+    newPiece.matrix = createPiece(pieces[rand]) 
+    newPiece.pos.y = 0;
+    newPiece.pos.x = (Math.floor(grid[0].length / 2)) - (Math.floor(newPiece.matrix.length / 2))  
+    //if full, don't add more, trigger game over. right now this will just clear board. afterward, implement game over
+    if (pieceCollision(grid, newPiece)) {
+        grid.forEach(row => row.fill(0));
+    }
+}
+
+//numbers correspond to various colors
+const createPiece = (type) => {
+    if (type === "T") {
+
+        return [
+            [0, 0, 0],
+            [1, 1, 1],
+            [0, 1, 0]
+        ];
+    } else if (type === "Z") {
+        //color: saddlebrown #933d26
+        return [
+            [2, 2, 0],
+            [0, 2, 2],
+            [0, 0, 0]
+        ];
+    } else if (type === "S") {
+        //color: 
+        return [
+            [0, 3, 3],
+            [3, 3, 0],
+            [0, 0, 0]
+        ];
+    } else if (type === "L") {
+        //color: orange
+        return [
+            [0, 4, 0],
+            [0, 4, 0],
+            [0, 4, 4]
+        ];
+    } else if (type === "J") {
+        //color: blue
+        return [
+            [0, 5, 0],
+            [0, 5, 0],
+            [5, 5, 0]
+        ];
+    } else if (type === "I") {
+        //color: cyan
+        return [
+            [0, 6, 0, 0],
+            [0, 6, 0, 0],
+            [0, 6, 0, 0],
+            [0, 6, 0, 0]
+        ];
+    } else if (type === "O") {
+        //color: yellow
+        return [
+            [7, 7],
+            [7, 7]
+        ];
+    };
+};
+
 const pieceMatrix = [
-    [0, 1, 0],
-    [0, 1, 0],
-    [0, 1, 1]
+    [0, 4, 0],
+    [0, 4, 0],
+    [0, 4, 4]
 ];
 
 const newPiece = {
@@ -54,6 +120,33 @@ const newPiece = {
     matrix: pieceMatrix
 }
 window.newPiece = newPiece;
+
+const colors = [
+    null,
+    'palevioletred',
+    'brown',
+    'cornflowerblue',
+    'lightseagreen',
+    'khaki',
+    'darkorange',
+    'darkolivegreen'
+];
+
+//---------------------------------------------Check for Complete Rows
+
+const gridCheck = () => {
+    outer: for (let y = grid.length - 1; y > 0; y--) {
+        for (let x = 0; x < grid[y].length; x++) {
+            if (grid[y][x] === 0) {
+                continue outer;
+            }
+        }
+
+        const row = grid.splice(y, 1)[0].fill(0) //takes row out at index y and fills it with zeros
+        grid.unshift(row) //add that row to the top of the grid
+    }
+}
+
 
 //----------------------------------------------Move Piece
 
@@ -71,7 +164,8 @@ const dropPieceByOne = () => {
     if (pieceCollision(grid, newPiece)) {
        newPiece.pos.y -= 1; //set back one cube on y-axis
        mergePieceToGrid(grid, newPiece);
-       newPiece.pos.y = 0;
+       resetPiece();
+       gridCheck();
     }
     dropCounter = 0 //set counter back to zero
 }
