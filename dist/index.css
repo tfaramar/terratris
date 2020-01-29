@@ -1,9 +1,42 @@
 body {
-    background-color: chocolate;
-    margin: 0, auto;
+    background-image: url("../background_img.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    min-height: 94vh;
+    max-height: 94vh;
+    font-family: 'Volkhov', serif;
+    font-weight: bold;
+    color: goldenrod;
+
+}
+
+h1 {
+    font-size: 3rem;
+    text-align: center;
+    padding: 1rem;
+}
+
+.main-content {
+    display: flex;
+    justify-content: center;
+    margin: 2rem;
+}
+
+.canvas-container {
+    border-radius: 4px;
+}
+
+.left-panels, .right-panels {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
 }
 
 /* .canvas-container {
     margin: 0, auto;
     width: 50%;
 } */
+
+/* Totoro CSS */
+/* Little puff CSS */
+/* Modal */
