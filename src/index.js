@@ -5,8 +5,19 @@ const canvas = document.getElementById("canvas");
 const context = canvas.getContext("2d");
 context.scale(20, 20); //scale everything x 30
 
-context.fillStyle = "white";
+context.fillStyle = "lemonchiffon";
 context.fillRect(0, 0, canvas.clientWidth, canvas.height);
+
+//------------------------------------------Is Paused
+let isPaused = false;
+
+//------------------------------------------Toggle Pause
+const togglePause = () => {
+    isPaused = !isPaused;
+    let modal = document.getElementById("modal");
+    modal.classList.toggle('paused');
+    modal.innerHTML = modal.innerHTML === "" ? "Paused" : "";
+}
 
 //-------------------------------------------Draw Piece
 const drawPiece = (type, offset) => {
@@ -21,13 +32,13 @@ const drawPiece = (type, offset) => {
 }
 
 const draw = () => {
-    context.fillStyle = "white"; //clear the canvas, consider clearRect instead?
+    context.fillStyle = "lemonchiffon"; //first clear canvas
     context.fillRect(0, 0, canvas.width, canvas.height); 
-    drawPiece(newPiece.matrix, newPiece.pos);
-    drawPiece(grid, {x: 0, y: 0})
+    drawPiece(newPiece.matrix, newPiece.pos); //then draw piece
+    drawPiece(grid, {x: 0, y: 0}) //draw grid
 }
 
-let lastTime = 0; //replace with timestamp, broadly supported
+let lastTime = 0;
 let dropCounter = 0;
 let dropInterval = 1000;
 
@@ -36,23 +47,51 @@ const update = (time = 0) => {
     const runTime = time - lastTime;
     lastTime = time;
     dropCounter += runTime
-    if (dropCounter > dropInterval) {
-      dropPieceByOne();  
+    if ((dropCounter > dropInterval) && !isPaused) {
+        dropPieceByOne();
     }
     draw();
-    requestAnimationFrame(update);
+    requestAnimationFrame(update);  
 }
+
+//----------------------------------------------Build Next Piece
+
 
 const resetPiece = () => {
     let pieces = ["T", "Z", "S", "O", "L", "J", "I"];
     let rand = Math.floor(pieces.length * Math.random())
     newPiece.matrix = createPiece(pieces[rand]) 
+    //randomly created piece should be pushed onto array of next three pieces, newPiece.matrix should come from the first element in that array
     newPiece.pos.y = 0;
     newPiece.pos.x = (Math.floor(grid[0].length / 2)) - (Math.floor(newPiece.matrix.length / 2))  
     //if full, don't add more, trigger game over. right now this will just clear board. afterward, implement game over
     if (pieceCollision(grid, newPiece)) {
-        grid.forEach(row => row.fill(0));
+        gameOver();
     }
+}
+
+//---------------------------------------------Game Over
+const gameOver = () => {
+    isPaused = true;
+    let modal = document.getElementById("modal");
+    modal.classList.add("game-over");
+    modal.innerHTML = "Try again!";
+    modal.addEventListener('click', exitGameOver);
+}
+
+const exitGameOver = () => {
+    let modal = document.getElementById("modal");
+    modal.classList.remove("game-over");
+    modal.innerHTML = "";
+    modal.removeEventListener('click', exitGameOver);
+    gameReset();
+}
+
+//---------------------------------------------Game Reset
+const gameReset = () => {
+    grid.forEach(row => row.fill(0));
+    //set level back to 0
+    isPaused = false;
 }
 
 //numbers correspond to various colors
@@ -65,35 +104,30 @@ const createPiece = (type) => {
             [0, 1, 0]
         ];
     } else if (type === "Z") {
-        //color: saddlebrown #933d26
         return [
             [2, 2, 0],
             [0, 2, 2],
             [0, 0, 0]
         ];
     } else if (type === "S") {
-        //color: 
         return [
             [0, 3, 3],
             [3, 3, 0],
             [0, 0, 0]
         ];
     } else if (type === "L") {
-        //color: orange
         return [
             [0, 4, 0],
             [0, 4, 0],
             [0, 4, 4]
         ];
     } else if (type === "J") {
-        //color: blue
         return [
             [0, 5, 0],
             [0, 5, 0],
             [5, 5, 0]
         ];
     } else if (type === "I") {
-        //color: cyan
         return [
             [0, 6, 0, 0],
             [0, 6, 0, 0],
@@ -101,7 +135,6 @@ const createPiece = (type) => {
             [0, 6, 0, 0]
         ];
     } else if (type === "O") {
-        //color: yellow
         return [
             [7, 7],
             [7, 7]
@@ -135,7 +168,7 @@ const colors = [
 //---------------------------------------------Check for Complete Rows
 
 const gridCheck = () => {
-    outer: for (let y = grid.length - 1; y > 0; y--) {
+    outer: for (let y = 0; y < grid.length; y++) {
         for (let x = 0; x < grid[y].length; x++) {
             if (grid[y][x] === 0) {
                 continue outer;
@@ -146,7 +179,6 @@ const gridCheck = () => {
         grid.unshift(row) //add that row to the top of the grid
     }
 }
-
 
 //----------------------------------------------Move Piece
 
@@ -167,7 +199,20 @@ const dropPieceByOne = () => {
        resetPiece();
        gridCheck();
     }
-    dropCounter = 0 //set counter back to zero
+    dropCounter = 0; //set counter back to zero
+}
+
+//------------------------------------------------Hard Drop Piece
+
+const hardDrop = () => {
+    while (!pieceCollision(grid, newPiece)) {
+        newPiece.pos.y += 1;
+    }
+    newPiece.pos.y -=1;
+    mergePieceToGrid(grid, newPiece);
+    resetPiece();
+    gridCheck();
+    dropCounter = 0;
 }
 
 //-----------------------------------------------Rotate Piece
@@ -208,16 +253,19 @@ const setGrid = (width, height) => {
 
 const grid = setGrid(10, 20);
 
+//---------------------------------------------Merge Piece to Grid
+
 const mergePieceToGrid = (grid, piece) => {
     piece.matrix.forEach((row, y) => {
         row.forEach((val, x) => {
             if (val !== 0) {
                 grid[y + piece.pos.y][x + piece.pos.x] = val
-                //console.log(grid);
             }
         })
     })   
 }
+
+//---------------------------------------------Check for Piece Collision
 
 const pieceCollision = (grid, piece) => {
     const matrix = piece.matrix;
@@ -225,7 +273,6 @@ const pieceCollision = (grid, piece) => {
     for (let y = 0; y < matrix.length; y++) {
         for (let x = 0; x < matrix[y].length; x++) {
             if ((matrix[y][x] !== 0) && (grid[y + pos.y] && grid[y + pos.y][x + pos.x]) !== 0) {
-                //console.log('collision!', grid);
                 return true;
             }
         }
@@ -233,29 +280,27 @@ const pieceCollision = (grid, piece) => {
     return false;
 }
 
+//---------------------------------------------Key Events
+
 document.addEventListener('keydown', event => {
     switch(event.keyCode) {
         case 37:
             movePiece(-1);
-            console.log('moved left');
             break;
         case 38:
             rotatePiece(newPiece);
-            console.log('rotate piece');
             break;
         case 39:
             movePiece(1);
-            console.log('moved right');
             break;
         case 40:
-            dropPieceByOne()
-            console.log('down one');
+            dropPieceByOne();
             break;
         case 80:
-            console.log('paused');
+            togglePause();
             break;
         case 32:
-            console.log('drop piece');
+            hardDrop();
             break;
     }
 });
@@ -265,7 +310,9 @@ document.addEventListener('keydown', event => {
 //-----------------------------------------------------Set level
 //when to level up? every 10 lines?
 
-
+// document.querySelector('audio').addEventListener('play', () => {
+//     console.log('audio playing')
+// })
 
 update();
 

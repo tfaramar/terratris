@@ -1,5 +1,5 @@
 body {
-    background-image: url("../assets/background_img.jpg");
+    background-image: url("../assets/images/background_img.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     min-height: 94vh;
@@ -17,12 +17,25 @@ h1 {
 
 .main-content {
     display: flex;
-    justify-content: center;
-    margin: 2rem;
+    justify-content: space-evenly;
+    margin: 2rem 4rem;
 }
 
 .canvas-container {
     border-radius: 4px;
+    position: relative;
+}
+
+#canvas {
+    z-index: 0;
+}
+
+#modal {
+    height: 400px;
+    width: 200px;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
 .left-panels, .right-panels {
@@ -31,11 +44,10 @@ h1 {
     padding: 2rem;
 }
 
-/* .canvas-container {
-    margin: 0, auto;
-    width: 50%;
-} */
-
-/* Totoro CSS */
-/* Little puff CSS */
-/* Modal */
+.game-over, .paused {
+    background-color:rgba(255,250,195, 0.7);
+    z-index: 3;
+    color: darkslateblue;
+    font-weight: bolder;
+    text-align: center;
+}

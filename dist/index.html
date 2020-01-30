@@ -13,18 +13,25 @@
     <div class="main-content">
         <div class="left-panels">
             <div class="toggle-music">Music</div>
+            <div class="reset">Reset</div>
             <div class="toggle-pause">Pause</div>
             <div>What?</div>
         </div>
-        <div class="canvas-container">
-            <canvas id="canvas" width="200" height="400"></canvas>
+        <div class="middle">
+            <div class="canvas-container">
+                <canvas id="canvas" width="200" height="400"></canvas>
+                <div id="modal"></div>
+            </div>
         </div>
         <div class="right-panels">
             <div>Next</div>
             <div>Level</div>
         </div>
     </div>
-    <audio preload="auto" controls src="../assets/audio/tetris_theme.mp3"></audio>
+    <iframe src="../assets/audio/silence.mp3" allow="autoplay" id="audio" style="display:none"></iframe>
+    <audio autoplay loop controls>
+        <source src="../assets/audio/tetris_theme.mp3" type="audio/mp3">
+    </audio>
         
 
     <script type="application/javascript" src="./main.js"></script>
