@@ -1,0 +1,61 @@
+body {
+    background-image: url("../images/background_img.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    min-height: 95vh;
+    max-height: 95vh;
+    font-family: 'Volkhov', serif;
+    font-weight: bold;
+    color: goldenrod;
+    font-size: 1.5rem;
+}
+
+h1 {
+    position: absolute;
+    font-size: 3.3rem;
+    text-align: center;
+    z-index: 10;
+    left: 185px;
+    transform: rotate(15deg);
+}
+
+.main-content {
+    display: flex;
+    justify-content: space-evenly;
+    margin: 1.6rem 4rem;
+}
+
+.canvas-container {
+    border-radius: 5px;
+    position: relative;
+    left: 50px;
+    bottom: 35px;
+    height: 400px;
+    width: 200px;
+    z-index: 1;
+}
+
+#canvas {
+    z-index: 0;
+}
+
+.left-panels, .right-panels {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 4rem 2rem;
+}
+
+.footer {
+    text-align: center;
+    font-size: 1.6rem;
+    
+}
+
+.footer a {
+    text-decoration: none;
+    color: antiquewhite;
+}
+
+
+

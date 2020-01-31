@@ -4,36 +4,73 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="./index.css">
-    <title>Terratris</title>
+    <link rel="stylesheet" href="../assets/styles/index.css">
+    <link rel="stylesheet" href="../assets/styles/modals.css">
+    <link rel="stylesheet" href="../assets/styles/totoro.css">
+
+    <title>Tetris</title>
     <link href="https://fonts.googleapis.com/css?family=Volkhov&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/b5bfb11c19.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <h1>Terratris</h1>
+    <div id="about-modal">
+        <h3>Welcome to Terratris!</h3>
+        <p>The game of Tetris has been around for more than 35 years. Although many variations have been made, the classic game
+        remains the most popular precisely because of its simplicity. I’ve never found a particularly relaxing skin for Tetris,
+        so I decided to make one for both of us.</p>
+        <p>Here are a few commands to get you started:</p>
+        <ul>
+            <li><span>&#8592; and &#8594;</span> &nbsp;move your piece laterally</li>
+            <li><span>&#8595;</span> &nbsp;accelerates the drop of your piece</li>
+            <li><span>spacebar</span> &nbsp;drops your piece</li>
+            <li><span>p</span> &nbsp;pauses the game</li>
+        </ul>
+        <br>
+        <p>Ok, now go play Tetris and let me know how far you make it!</p>
+        <button>I will!</button>
+        <br>
+        <br>
+        <p>Credits to Patrick Pietschmann for Tetris Variation A on piano, Studio Ghibli for the background art, and Chilli Con Code for Pure CSS Totoro.</p>
+    </div> 
     <div class="main-content">
         <div class="left-panels">
             <div class="toggle-music">Music</div>
             <div class="reset">Reset</div>
-            <div class="toggle-pause">Pause</div>
-            <div>What?</div>
+            <div id="about">What?</div>
         </div>
         <div class="middle">
-            <div class="canvas-container">
-                <canvas id="canvas" width="200" height="400"></canvas>
-                <div id="modal"></div>
+            <div class="t totoro">
+                <h1>T&nbsp;e&nbsp;r&nbsp;r&nbsp;a&nbsp;t&nbsp;r&nbsp;i&nbsp;s</h1>
+                <div class="t head"></div>
+                <div class="t ears"></div>
+                <div class="t legs"></div>
+                <div class="t left-arm"></div>
+                <div class="t right-arm"></div>
+                <div class="t body"></div>
+                <div class="t belly">
+                    <div class="canvas-container">
+                        <canvas id="canvas" width="200" height="400"></canvas>
+                        <div id="modal"></div>
+                    </div>
+                </div>
+                
+                <div class="t eyes"></div>
+                <div class="t nose-bridge"></div>
+                <div class="t nose"></div>
+                <div class="t whiskers"></div>
             </div>
+            
         </div>
         <div class="right-panels">
             <div>Next</div>
             <div>Level</div>
         </div>
     </div>
-    <iframe src="../assets/audio/silence.mp3" allow="autoplay" id="audio" style="display:none"></iframe>
-    <audio autoplay loop controls>
-        <source src="../assets/audio/tetris_theme.mp3" type="audio/mp3">
-    </audio>
-        
-
+    <div class="footer">
+        <a href="https://github.com/tfaramar"><i class="fab fa-github"></i></a>
+        <a href="https://www.linkedin.com/in/tatiana-faramarzi-598897174/"><i class="fab fa-linkedin"></i></a>    
+        <a href="https://angel.co/tatiana-faramarzi?public_profile=1"><i class="fab fa-angellist"></i></a>    
+    </div>
     <script type="application/javascript" src="./main.js"></script>
 </body>
 </html>

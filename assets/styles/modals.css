@@ -1,0 +1,64 @@
+
+#about-modal {
+    display: none;
+    position: absolute;
+    top: 2rem;
+    left: 3.5rem;
+    width: 80vw;
+    height: 80vh;
+    background-color:rgba(255,250,195, 0.9);
+    color: #191970;
+    padding: 3rem;
+    border-radius: 5px;
+    overflow: scroll;
+    z-index: 10;
+    font-size: 1rem;
+}
+
+#about-modal h3 {
+    text-align: center;
+    font-weight: bolder;
+}
+
+#about-modal ul {
+    list-style: none;
+    text-align: center;
+}
+
+#about-modal span {
+    color: brown;
+    font-weight: bolder;
+}
+
+#about-modal button {
+    padding: 1rem;
+    border: 2px solid forestgreen;
+    background-color:rgba(255,250,195, 0.9);
+    color: brown;
+    font-family: 'Volkhov', serif;
+    font-weight: bolder;
+    font-size: 1rem;
+    border-radius: 5px;
+    width: 5rem;
+    margin: 0 45%;
+}
+
+.active-about {
+  display: block;  
+}
+
+#modal {
+    height: 400px;
+    width: 200px;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.game-over, .paused {
+    background-color:rgba(255,250,195, 0.7);
+    z-index: 3;
+    color: darkslateblue;
+    font-weight: bolder;
+    text-align: center;
+}

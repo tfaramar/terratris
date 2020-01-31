@@ -1,4 +1,6 @@
 console.log('webpack is working!')
+//-----------------------------------------Add JS functionality to panel buttons
+
 
 //-------------------------------------------Canvas Configuration
 const canvas = document.getElementById("canvas");
@@ -16,7 +18,7 @@ const togglePause = () => {
     isPaused = !isPaused;
     let modal = document.getElementById("modal");
     modal.classList.toggle('paused');
-    modal.innerHTML = modal.innerHTML === "" ? "Paused" : "";
+    //modal.innerHTML = modal.innerHTML === "" ? "Paused" : "";
 }
 
 //-------------------------------------------Draw Piece
@@ -44,6 +46,7 @@ let dropInterval = 1000;
 
 //---------------------------------------------Implement Animation of Piece
 const update = (time = 0) => {
+    console.log(time);
     const runTime = time - lastTime;
     lastTime = time;
     dropCounter += runTime
@@ -305,10 +308,8 @@ document.addEventListener('keydown', event => {
     }
 });
 
-//-----------------------------------------------------Set points
+//-----------------------------------------------------Set level - level up every 10 lines
 
-//-----------------------------------------------------Set level
-//when to level up? every 10 lines?
 
 // document.querySelector('audio').addEventListener('play', () => {
 //     console.log('audio playing')
