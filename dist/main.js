@@ -141,7 +141,6 @@ let dropInterval = 1000;
 
 //---------------------------------------------Implement Animation of Piece
 const update = (time = 0) => {
-    console.log(time);
     const runTime = time - lastTime;
     lastTime = time;
     dropCounter += runTime
@@ -255,12 +254,12 @@ window.newPiece = newPiece;
 const colors = [
     null,
     'palevioletred',
-    'brown',
+    'gold',
     'cornflowerblue',
     'lightseagreen',
-    'khaki',
+    'coral',
     'darkorange',
-    'darkolivegreen'
+    'teal'
 ];
 
 //---------------------------------------------Check for Complete Rows

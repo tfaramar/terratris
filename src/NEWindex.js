@@ -1,5 +1,4 @@
 const Tetris = require("./tetris.js");
-const GamePlay = require("./gameplay.js");
 
 console.log('webpack is working!')
 
