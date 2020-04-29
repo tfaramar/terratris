@@ -25,8 +25,6 @@ Here are a few commands to get you started:
 This version of Tetris was built with HTML, CSS, Javascript, and a few days' time. 
 
 
-
-
 ## Future features
 
 My primary goal was to create a clean, well-functioning game of Tetris. However, if I decide to return to this project, I'd like to implement the following:
